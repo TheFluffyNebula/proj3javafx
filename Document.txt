@@ -1,9 +1,9 @@
 --Exceptions created--
 NumberFormatException (I only have two textboxes that take integers)
-handles decimals and strings
+happens when the user enters anything that's not an integer, ex. decimals and strings
 
 ZeroNumberException
-if the number is zero or less, throw this
+happens when the user enters a number <= 0
 
 Visual bug: too many dice/sides will cause the numbers to go off screen
 Exception for that: HighNumberException
