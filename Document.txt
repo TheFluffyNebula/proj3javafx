@@ -2,8 +2,11 @@
 NumberFormatException (I only have two textboxes that take integers)
 handles decimals and strings
 
+ZeroNumberException
+if the number is zero, throw this
+
 Visual bug: too many dice/sides will cause the numbers to go off screen
 Exception for that: HighNumberException
 New requirements: 
-Number of Dice: excluding 0, including up to 20
-Number of Sides: excluding 0, including up to 200
+Number of Dice: up to 20
+Number of Sides: up to 200

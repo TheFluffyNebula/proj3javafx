@@ -101,6 +101,14 @@ public class DicePane extends GridPane {
             System.out.println("Roll Button Pressed");
             // setup and roll the new dice with the new parameters with error handling
             try {
+                if (Integer.parseInt(numSidesField.getText()) <= 0
+                        || Integer.parseInt(numDiceField.getText()) <= 0) {
+                    throw new ZeroNumberException("Error: Enter two positive integers");
+                }
+                if (Integer.parseInt(numSidesField.getText()) > 200
+                        || Integer.parseInt(numDiceField.getText()) > 20) {
+                    throw new HighNumberException("Error: sides must be less than 200, dice must be less than 20");
+                }
                 dice.setNumSides(Integer.parseInt(numSidesField.getText()));
                 dice.setNumDice(Integer.parseInt(numDiceField.getText()));
                 dice.setDiceRolls(new int[dice.getNumDice()]);
@@ -110,10 +118,22 @@ public class DicePane extends GridPane {
                 numSidesLabel.setText("Number of Sides: " + Integer.toString(dice.getNumSides()));
                 numDiceLabel.setText("Number of Dice: " + Integer.toString(dice.getNumDice()));
                 diceValuesLabel.setText("Dice Values: " + dice.toString());
+                errorMsgLabel.setText("Enter two positive integers");
             } catch (NumberFormatException ex) {
-                errorMsgLabel.setText("Error: Enter two positive integers");
+                try {
+                    double numSides = Double.parseDouble(numSidesField.getText());
+                    double numDice = Double.parseDouble(numDiceField.getText());
+                    errorMsgLabel.setText("Error: Decimal value entered; please enter an integer");
+                } catch (NumberFormatException ex2) {
+                    // Check if the input is a string
+                    errorMsgLabel.setText("Error: Non-numeric characters entered; please enter an integer");
+                }
             } catch (IllegalArgumentException ex) {
                 errorMsgLabel.setText("Error: Enter two positive integers");
+            } catch (ZeroNumberException ex) {
+                errorMsgLabel.setText("Error: integers must be greater than 0");
+            } catch (HighNumberException ex) {
+                errorMsgLabel.setText("Error: sides must be less than 201, dice must be less than 21");
             }
         });
 
@@ -147,4 +167,15 @@ public class DicePane extends GridPane {
         this.setStyle("-fx-background-color: pink");
     }
 
+    private static class ZeroNumberException extends Exception {
+        public ZeroNumberException(String message) {
+            super(message);
+        }
+    }
+
+    private static class HighNumberException extends Exception {
+        public HighNumberException(String message) {
+            super(message);
+        }
+    }
 }
