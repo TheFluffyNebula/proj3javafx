@@ -25,10 +25,11 @@ public class DicePane extends GridPane{
     private TextField numSidesField;
     private TextField numDiceField;
     
-    // three label attributes for numSides, numDice, diceValues
+    // three label attributes for numSides, numDice, diceValues, error msg
     private Label numSidesLabel;
     private Label numDiceLabel;
     private Label diceValuesLabel;
+    private Label errorMsgLabel;
 
     // Step 1: Declare a roll button (add a button to roll the dice)
     private Button rollButton;
@@ -73,11 +74,13 @@ public class DicePane extends GridPane{
         numDiceLabel = new Label("Number of Dice: " + dice.getNumDice());
         dice.rollDice();
         diceValuesLabel = new Label("Dice Values: " + dice.toString());
+        errorMsgLabel = new Label("Enter two positive integers");
 
         // Add a label to the pane
         this.add(numSidesLabel, 0, 0);
         this.add(numDiceLabel, 0, 1);
         this.add(diceValuesLabel, 0, 2);
+        this.add(errorMsgLabel, 0, 5);
         // Add numSidesField to the pane next to the label
         this.add(numSidesField, 1, 0);
         this.add(numDiceField, 1, 1);
