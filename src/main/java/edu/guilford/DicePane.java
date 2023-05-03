@@ -9,6 +9,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
 /* 
  * Two main parts to the GUI:
  * 1. rolling
@@ -17,14 +18,14 @@ import javafx.scene.layout.GridPane;
  * steps with the image will have image.[stepNumber]:
  * steps with the slider will have slider.[stepNumber]:
  */
-public class DicePane extends GridPane{
+public class DicePane extends GridPane {
     // dice attribute
     private Dice dice;
 
     // add textFields for numSides, numDice
     private TextField numSidesField;
     private TextField numDiceField;
-    
+
     // three label attributes for numSides, numDice, diceValues, error msg
     private Label numSidesLabel;
     private Label numDiceLabel;
@@ -54,7 +55,8 @@ public class DicePane extends GridPane{
         // Step 2: convert it into something we can add to the pane
         rollButton = new Button("Roll");
 
-        // Image.2: Instantiate the ImageView attribute with the image we want to display
+        // Image.2: Instantiate the ImageView attribute with the image we want to
+        // display
         // Get the file that contains the image
         File diceImage = new File(this.getClass().getResource("diceImage.JPG").getPath());
         // System.out.println(diceImage.toURI().toString());
@@ -63,7 +65,8 @@ public class DicePane extends GridPane{
         // Slider.2
         numDiceSlider = new Slider(1, 360, 1);
         numDiceSlider.setShowTickMarks(true);
-        //my best guess is start, end, step so this should be integers from 1 to 10 inclusive
+        // my best guess is start, end, step so this should be integers from 1 to 10
+        // inclusive
 
         // instantiate textfield attributes
         numSidesField = new TextField();
@@ -96,20 +99,26 @@ public class DicePane extends GridPane{
         // Steps 4 and 5: Write an event listener and connect it to the component
         rollButton.setOnAction(e -> {
             System.out.println("Roll Button Pressed");
-            // setup and roll the new dice with the new parameters
-            dice.setNumSides(Integer.parseInt(numSidesField.getText()));
-            dice.setNumDice(Integer.parseInt(numDiceField.getText()));
-            dice.setDiceRolls(new int[dice.getNumDice()]);
-            // System.out.println(dice.getDiceRolls());
-            dice.rollDice();
-            // update the label
-            numSidesLabel.setText("Number of Sides: " + Integer.toString(dice.getNumSides()));
-            numDiceLabel.setText("Number of Dice: " + Integer.toString(dice.getNumDice()));
-            diceValuesLabel.setText("Dice Values: " + dice.toString());
+            // setup and roll the new dice with the new parameters with error handling
+            try {
+                dice.setNumSides(Integer.parseInt(numSidesField.getText()));
+                dice.setNumDice(Integer.parseInt(numDiceField.getText()));
+                dice.setDiceRolls(new int[dice.getNumDice()]);
+                // System.out.println(dice.getDiceRolls());
+                dice.rollDice();
+                // update the label
+                numSidesLabel.setText("Number of Sides: " + Integer.toString(dice.getNumSides()));
+                numDiceLabel.setText("Number of Dice: " + Integer.toString(dice.getNumDice()));
+                diceValuesLabel.setText("Dice Values: " + dice.toString());
+            } catch (NumberFormatException ex) {
+                errorMsgLabel.setText("Error: Enter two positive integers");
+            } catch (IllegalArgumentException ex) {
+                errorMsgLabel.setText("Error: Enter two positive integers");
+            }
         });
 
         // Image.3: Add the ImageView to the pane to the right of the textfields
-        this.add(imageView, 2, 0, 1, 4);
+        this.add(imageView, 1, 5, 1, 4);
         // We can change the image to be of a different size
         imageView.setFitHeight(100);
         // And preserve the aspect ratio
@@ -127,7 +136,7 @@ public class DicePane extends GridPane{
         numDiceSlider.setOnMouseReleased(e -> {
             System.out.println("Slider Released");
             // update the color of the background
-            this.setStyle("-fx-background-color: hsb(" + numDiceSlider.getValue() + ", 100%, 100%)" );
+            this.setStyle("-fx-background-color: hsb(" + numDiceSlider.getValue() + ", 100%, 100%)");
         });
 
         // Give the pane a border

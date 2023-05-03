@@ -1,7 +1,9 @@
 --Exceptions created--
 NumberFormatException (I only have two textboxes that take integers)
-Visual bug: too many dice will cause the numbers to go off screen
+handles decimals and strings
+
+Visual bug: too many dice/sides will cause the numbers to go off screen
 Exception for that: HighNumberException
 New requirements: 
-Number of Dice: excluding 0, including up to 15
+Number of Dice: excluding 0, including up to 20
 Number of Sides: excluding 0, including up to 200
