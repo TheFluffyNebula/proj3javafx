@@ -3,7 +3,7 @@ NumberFormatException (I only have two textboxes that take integers)
 handles decimals and strings
 
 ZeroNumberException
-if the number is zero, throw this
+if the number is zero or less, throw this
 
 Visual bug: too many dice/sides will cause the numbers to go off screen
 Exception for that: HighNumberException
